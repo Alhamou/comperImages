@@ -8,8 +8,6 @@ const { imagesHashHandler } = require('./ImagesHashHandler');
 
     // Calculate the hash of the image using the calculateImageHash method from imagesHashHandler
     const imgHash = await imagesHashHandler.calculateImageHash(imgPath);
-    // Prepare image data with its path and calculated hash
-    const imgData = { path: imgPath, hash: imgHash };
 
     // Retrieve the existing image data from the JSON file
     const imagesData = await imagesHashHandler.readJsonData();
@@ -20,6 +18,8 @@ const { imagesHashHandler } = require('./ImagesHashHandler');
       // If the image exists, log its details to the console
       console.log("Image already exists in JSON with the following details:", foundImage);
     } else {
+      // Prepare image data with its path and calculated hash
+      const imgData = { path: imgPath, hash: imgHash };
       // If the image does not exist, append the new image data to the JSON file
       await imagesHashHandler.appendJsonData(imgData);
       // Log a confirmation that new image data has been appended
