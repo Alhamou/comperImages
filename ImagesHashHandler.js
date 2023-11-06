@@ -13,7 +13,7 @@ const imagesHashHandler = (function() {
   const filePath = "./temp/hashImagesStored.json"
 
   // Method to verify the presence of a file and create it if it does not exist
-  obj.verifyFilePresence = async function(targetPath) {
+  const verifyFilePresence = async function(targetPath) {
     try {
       await fs.access(targetPath);
     } catch (error) {
@@ -28,7 +28,7 @@ const imagesHashHandler = (function() {
 
   // Method to read JSON data from a file, ensuring the file exists beforehand
   obj.readJsonData = async function() {
-    await this.verifyFilePresence(filePath);
+    await verifyFilePresence(filePath);
     const data = await fs.readFile(filePath, 'utf8');
     return JSON.parse(data || '[]');
   }
