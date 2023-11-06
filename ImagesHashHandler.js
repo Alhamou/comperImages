@@ -26,17 +26,23 @@ const imagesHashHandler = (function() {
   };
 
   // Method to read JSON data from a file, ensuring the file exists beforehand
-  obj.readJsonData = async function() {
+  obj.findJsonData = async function(imgPath) {
+    // Calculate the hash of the image using the calculateImageHash method from imagesHashHandler
+    const imgHash = await imagesHashHandler.calculateImageHash(imgPath);
+
     await verifyFilePresence(filePath);
-    const data = await fs.readFile(filePath, 'utf8');
-    return JSON.parse(data || '[]');
+    let data = await fs.readFile(filePath, 'utf8');
+    data = JSON.parse(data || '[]');
+    // Retrieve the existing image data from the JSON file
+    return {item: data.find(item => item.hash === imgHash), imgHash, data}
   };
 
   // Method to append new data to our JSON file, including reading and writing to the file
-  obj.appendJsonData = async function(newData) {
-    const existingData = await this.readJsonData();
-    existingData.push(newData);
-    const jsonContent = JSON.stringify(existingData, null, 2);
+  obj.appendJsonData = async function(imgPath, imgHash, data) {
+    // const data = await fs.readFile(filePath, 'utf8');
+    let dataJson = data || '[]';
+    dataJson.push({ path: imgPath, hash: imgHash });
+    const jsonContent = JSON.stringify(dataJson, null, 2);
     await fs.writeFile(filePath, jsonContent, 'utf8');
   };
 
