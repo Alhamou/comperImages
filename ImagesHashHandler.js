@@ -34,7 +34,8 @@ const imagesHashHandler = (function() {
     let jsonContent = await fs.readFile(filePath, 'utf8');
     jsonContent = JSON.parse(jsonContent || '[]');
     // Retrieve the existing image data from the JSON file
-    return {item: jsonContent.find(item => item.hash === imgHash), imgHash, jsonContent}
+    const item = jsonContent.find(item => item.hash === imgHash) || false
+    return {item, imgHash, jsonContent: (item ? null : jsonContent)}
   };
 
   // Method to append new data to our JSON file, including reading and writing to the file
