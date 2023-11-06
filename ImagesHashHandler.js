@@ -31,19 +31,18 @@ const imagesHashHandler = (function() {
     const imgHash = await imagesHashHandler.calculateImageHash(imgPath);
 
     await verifyFilePresence(filePath);
-    let data = await fs.readFile(filePath, 'utf8');
-    data = JSON.parse(data || '[]');
+    let jsonContent = await fs.readFile(filePath, 'utf8');
+    jsonContent = JSON.parse(jsonContent || '[]');
     // Retrieve the existing image data from the JSON file
-    return {item: data.find(item => item.hash === imgHash), imgHash, data}
+    return {item: jsonContent.find(item => item.hash === imgHash), imgHash, jsonContent}
   };
 
   // Method to append new data to our JSON file, including reading and writing to the file
-  obj.appendJsonData = async function(imgPath, imgHash, data) {
-    // const data = await fs.readFile(filePath, 'utf8');
-    let dataJson = data || '[]';
-    dataJson.push({ path: imgPath, hash: imgHash });
-    const jsonContent = JSON.stringify(dataJson, null, 2);
-    await fs.writeFile(filePath, jsonContent, 'utf8');
+  obj.appendJsonData = async function(imgPath, imgHash, jsonContent) {
+    jsonContent = jsonContent || '[]';
+    jsonContent.push({ path: imgPath, hash: imgHash });
+    const newJsonContent = JSON.stringify(jsonContent, null, 2);
+    await fs.writeFile(filePath, newJsonContent, 'utf8');
   };
 
   // Method to calculate the hash of an image using SHA-256 algorithm
