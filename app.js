@@ -2,7 +2,7 @@ const sharp = require('sharp');
 const crypto = require('crypto');
 const fs = require('fs').promises;
 
-class FileHandler {
+class ImagesHashHandler {
 
   constructor(filePath){
     this.filePath = filePath
@@ -42,7 +42,7 @@ class FileHandler {
 }
 
 (async () => {
-  const fileMgr = new FileHandler("./temp/hashImagesStored.json");
+  const fileMgr = new ImagesHashHandler("./temp/hashImagesStored.json");
   const imgPath = "./images/1.jpeg";
 
 
