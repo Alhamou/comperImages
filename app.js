@@ -4,7 +4,7 @@ const fs = require('fs').promises;
 
 class FileHandler {
 
-  async verifyFilePresence(targetPath) {
+  async #verifyFilePresence(targetPath) {
     try {
       await fs.access(targetPath);
     } catch (error) {
@@ -18,7 +18,7 @@ class FileHandler {
   }
 
   async readJsonData(filePath) {
-    await this.verifyFilePresence(filePath);
+    await this.#verifyFilePresence(filePath);
     const data = await fs.readFile(filePath, 'utf8');
     return JSON.parse(data || '[]');
   }
