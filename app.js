@@ -7,7 +7,7 @@ const { imagesHashHandler } = require('./ImagesHashHandler');
     const imgPath = "./images/1.jpeg";
 
     // Check if the image hash already exists in the data retrieved
-    const {item, imgHash, jsonContent} = await imagesHashHandler.findJsonData(imgPath);
+    const {item, imgHash, jsonContent} = await imagesHashHandler.findOneImage(imgPath);
 
     if (item) {
       // If the image exists, log its details to the console
