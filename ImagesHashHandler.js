@@ -62,7 +62,7 @@ const imagesHashHandler = (function() {
         if (stderr) {
             reject(stderr)
         }
-        resolve(true)
+        resolve(null)
     })
   });
   }
